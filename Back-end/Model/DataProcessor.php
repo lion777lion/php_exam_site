@@ -1,4 +1,6 @@
 <?php 
+     
+
     class DataProcessor{
 
         private $connection = null;
@@ -6,13 +8,23 @@
         public function __construct($connection){
             $this->connection = $connection;
         }
-    
+        
+        public function validateStudent($student) {
+            if(isset($student['isikucod']) && isset($student['surname']) 
+                && isset($student['fname']) && isset($student['gradle']) 
+                && isset($student['email'])) {
+                    return false;
+                } else {
+                    return true;
+            }
+        } 
+
         public function findAllStudents()
         {
             try{
-                $statement = "SELECT * FROM students;";
-                $statement = $this->connection->query($statement);
-                $result = $statement->mysql_fetch_all();
+                $query = "SELECT * FROM students;";
+                $statement = $this->connection->query($query);
+                $result = $statement->fetch_all(MYSQLI_ASSOC);
                 return $result;
             } catch (mysqli_sql_exception $e) {
                 exit($e->getMessage());
@@ -22,10 +34,10 @@
         public function findStudent($isikucod)
         {
             try{
-                $statement = "SELECT * FROM students WHERE isikucod = ?;";
-                $statement = $this->connection->prepare($statement);
+                $query = "SELECT * FROM students WHERE isikucod = ?;";
+                $statement = $this->connection->prepare($query);
                 $statement->execute(array($isikucod));
-                $result = $statement->mysql_fetch_all();
+                $result = $statement->fetch_all(MYSQLI_ASSOC);
                 return $result;
             } catch (mysqli_sql_exception $e) {
                 exit($e->getMessage());
@@ -34,11 +46,11 @@
     
         public function addStudent(Array $input)
         {
-            $statement = "INSERT INTO `students` (`isikucod`,`surname`,`fname`,`grade`,`email`,`message`)
+            $query = "INSERT INTO `students` (`isikucod`,`surname`,`fname`,`grade`,`email`,`message`)
                           VALUES (:isikucod, :surname, :fname, :grade, :email, :message);";
     
             try {
-                $statement = $this->connection->prepare($statement);
+                $statement = $this->connection->prepare($query);
                 $statement->execute(array(
                     'isikucod' => $input['isikucod'],
                     'surname'  => $input['surname'],
@@ -47,22 +59,22 @@
                     'email' => $input['email'],
                     'message' => $input['message'] ?? null
                 ));
-                return $statement->rowCount();
+                return true;
             } catch (mysqli_sql_exception $e) {
-                exit($e->getMessage());
+                return $e->getMessage();
             }
         }
     
         public function removeStudent($isikucod)
         {
-            $statement = "DELETE FROM students WHERE isikucod = :isikucod;";
+            $query = "DELETE FROM students WHERE isikucod = :isikucod;";
     
             try {
-                $statement = $this->connection->prepare($statement);
+                $statement = $this->connection->prepare($query);
                 $statement->execute(array('isikucod' => $isikucod));
-                return $statement->rowCount();
+                return true;
             } catch (mysqli_sql_exception $e) {
-                exit($e->getMessage());
+                return $e->getMessage();
             }
         }
 

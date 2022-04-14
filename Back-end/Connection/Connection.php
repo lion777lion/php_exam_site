@@ -6,13 +6,12 @@ class Connection {
     public function __construct()
     {
         try {
-            $this->Connection = mysqli_connect("host=192.168.1.73
-             dbname=siteDB user=sitesuser password=sitespasswor");
+            $this->сonnection = mysqli_connect('192.168.1.73',
+              'root', 'Lion1234SEXX', 'siteDB');
         } catch (mysqli_sql_exception $e) {
             exit($e->getMessage());
         }
     }
-
     public function getConnection()
     {
         return $this->сonnection;
