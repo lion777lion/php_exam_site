@@ -9,6 +9,14 @@
     <script src="JS/getData.js"></script>
     <div id="root">
         <div class="container">
+            <div>
+                <input id="delete" type="text" placeholder="Enter Isikucod for delete">
+                <button onclick="deleteStudent()">Delete</button>
+                <input id="search" type="text" placeholder="Enter Isikucod for search">
+                <button onclick="searchStudent()">Search</button>
+                <button onclick="window.location.href = 'addStudent.html'">Add student</button>
+                <button onclick="window.location.href = 'index.html'">Show all</button>
+            </div>
             <table id="students" class="table table-bordered">
                 <tr>
                     <th>Isikucod</th>

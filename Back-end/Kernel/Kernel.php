@@ -1,6 +1,6 @@
 <?php
  require __DIR__ . "/../Connection/Connection.php";
-
+//класс-ядро, необходим для базовой инициализации БД и обеспечения начальных данных
 class Kernel {
     private $connection;
 
