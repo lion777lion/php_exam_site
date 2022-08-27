@@ -28,10 +28,10 @@ function submit(isikucod, fname, surname, email, grade, message) {
             alert(fname + " " + surname + " " + "successfully added!");
             window.location.href = 'index.html';
         } else {
-            alert("Something wrong:("));
+            alert("Something wrong:(");
+        }
     }
-}
-request.send(data);
+    request.send(data);
 }
 
 
